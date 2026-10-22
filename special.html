@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Message For Ekal 💖</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #ffe5ec; /* Latar Soft Pink */
+            font-family: 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Partikel Hati Melayang */
+        .floating-heart {
+            position: absolute;
+            color: #ffb3c1;
+            font-size: 18px;
+            pointer-events: none;
+            animation: float 5s linear infinite;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Kartu Jendela Utama */
+        .card {
+            background: #fff0f3;
+            border: 3px solid #ff758f;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(255, 117, 143, 0.35);
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            z-index: 10;
+            text-align: center;
+            animation: popIn 0.4s ease-out;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .card-header {
+            background-color: #ffb3c1;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #800f2f;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            border: 1px solid #ff758f;
+        }
+
+        .card-body {
+            padding: 25px 20px;
+            background: repeating-linear-gradient(
+                45deg,
+                #fff0f3,
+                #fff0f3 12px,
+                #ffe5ec 12px,
+                #ffe5ec 24px
+            );
+        }
+
+        h2 {
+            color: #c9184a;
+            font-size: 18px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        p {
+            color: #800f2f;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Pilihan Radio / Opsi Alasan */
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0 20px 0;
+            text-align: left;
+        }
+
+        .option-item {
+            background: #ffffff;
+            border: 2px solid #ffb3c1;
+            padding: 12px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #590d22;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option-item:hover, .option-item.selected {
+            border-color: #ff4d6d;
+            background-color: #ffe5ec;
+            font-weight: bold;
+        }
+
+        .option-item input {
+            accent-color: #ff4d6d;
+        }
+
+        /* Tombol Utama */
+        .btn {
+            background-color: #ff4d6d;
+            color: white;
+            border: 2px solid #c9184a;
+            padding: 10px 24px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #c9184a;
+        }
+
+        .btn:disabled {
+            background-color: #ffb3c1;
+            border-color: #ffb3c1;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Grup Tombol Final */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 45px;
+        }
+
+        .btn-no {
+            background-color: #ffffff;
+            color: #ff4d6d;
+            border-color: #ff4d6d;
+            position: absolute;
+            right: 30px;
+        }
+
+        /* Tampilan Sembunyi */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Ringkasan Jawaban Ekal */
+        .summary-box {
+            background: #ffffff;
+            border: 2px dashed #ff758f;
+            border-radius: 12px;
+            padding: 12px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 12px;
+            color: #800f2f;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .summary-item {
+            margin-bottom: 6px;
+            padding-bottom: 4px;
+            border-bottom: 1px dotted #ffb3c1;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Partikel Hati Latar Belakang -->
+    <div id="heartContainer"></div>
+
+    <!-- TAHAP 0: DEPAN / AMPLOP -->
+    <div class="card" id="step0">
+        <div class="card-header">
+            <span>FOR EKAL ♥️</span>
+            <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="card-body">
+            <div style="font-size: 50px; margin-bottom: 10px;">💌</div>
+            <h2>Hai Ekal! 💖</h2>
+            <p>Aku ada 5 pertanyaan singkat nih buat kamu. Dijawab jujur yaa!</p>
+            <button class="btn" onclick="startQuiz()">Mulai Jawab ✨</button>
+        </div>
+    </div>
+
+    <!-- TAHAP 1 SAMPAI 5 (PERTANYAAN) -->
+    <div class="card hidden" id="quizCard">
+        <div class="card-header">
+            <span id="quizProgress">QUESTION 1/5 ❓</span>
+            <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="card-body">
+            <h2 id="questionTitle">Pertanyaan</h2>
+
+            <div class="options-group" id="optionsContainer">
+                <!-- Opsi Jawaban diisi secara otomatis lewat JS -->
+            </div>
+
+            <button class="btn" id="btnNext" disabled onclick="nextQuestion()">Lanjut ➔</button>
+        </div>
+    </div>
+
+    <!-- TAHAP CONFESSION (YES OR NO) -->
+    <div class="card hidden" id="confessCard">
+        <div class="card-header">
+            <span>CONFESSION 💖</span>
+            <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="card-body">
+            <div style="font-size: 45px; margin-bottom: 5px;">🐈‍⬛💖</div>
+            <h2>Alasan Kamu Mau Sama Aku:</h2>
+
+            <!-- Ringkasan 5 Jawaban Ekal -->
+            <div class="summary-box" id="answersSummary"></div>
+
+            <p style="font-weight: bold; color: #c9184a; font-size: 15px; margin-top: 10px;">
+                Jadi, Ekal... Will you be my girlfriend? ♡
+            </p>
+
+            <div class="button-group">
+                <button class="btn" onclick="acceptLove()">YES! 💖</button>
+                <button class="btn btn-no" id="btnNo" onmouseover="moveNoButton()" onclick="moveNoButton()">NO 😜</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAHAP AKHIR (SUCCESS) -->
+    <div class="card hidden" id="successCard">
+        <div class="card-header">
+            <span>YAAAY! 🎉</span>
+            <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        </div>
+        <div class="card-body">
+            <div style="font-size: 60px; margin-bottom: 10px;">🎉🥰✨</div>
+            <h2>Makasih Ekal! 💖</h2>
+            <p style="font-size: 15px; color: #c9184a; font-weight: bold;">
+                I'm so happy right now! Makasih yaa udah mau bareng aku. I love you! ✨
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // DATA 5 PERTANYAAN (Bisa kamu edit teksnya di sini nanti!)
+        const questions = [
+            {
+                title: "1. Kenapa sih kamu pertama kali mau deket sama aku?",
+                options: [
+                    "Soalnya kamu keliatan lucu & menarik 🥹",
+                    "Soalnya kamu baik & asyik diajak ngobrol ✨",
+                    "Gak tau, pokoknya penasaran aja sama kamu! 💖"
+                ]
+            },
+            {
+                title: "2. Hal apa dari aku yang paling bikin kamu nyaman?",
+                options: [
+                    "Cara aku merhatiin & dengerin kamu 🧸",
+                    "Candaan & ketawa kita pas lagi bareng 😂",
+                    "Suasana santai & apa adanya pas sama kamu 🌸"
+                ]
+            },
+            {
+                title: "3. Menurut kamu, aku itu tipe orang yang gimana?",
+                options: [
+                    "Manis & selalu bikin gemes 💖",
+                    "Sabar & selalu ada buat kamu ✨",
+                    "Semua hal positif ada di kamu deh! 🥰"
+                ]
+            },
+            {
+                title: "4. Kebiasaan kecil aku apa yang paling kamu suka?",
+                options: [
+                    "Pas aku lagi ngabarin/nanyain hal kecil 📱",
+                    "Pas aku lagi berusaha bikin kamu senyum 🫠",
+                    "Suka semua kebiasaan kamu, gak ada yang gagal! ♥️"
+                ]
+            },
+            {
+                title: "5. Singkatnya, kenapa kamu mau tetep sama aku?",
+                options: [
+                    "Soalnya bahagia banget kalau sama kamu 🥰",
+                    "Soalnya kamu udah jadi tempat pulang terbaik 🏡",
+                    "Soalnya emang udah sayang banget sama kamu! 💖"
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let selectedAnswers = [];
+
+        function startQuiz() {
+            document.getElementById('step0').classList.add('hidden');
+            document.getElementById('quizCard').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('quizProgress').innerText = `QUESTION ${currentQuestionIndex + 1}/5 ❓`;
+            document.getElementById('questionTitle').innerText = q.title;
+            
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            document.getElementById('btnNext').disabled = true;
+
+            q.options.forEach((optText, idx) => {
+                const label = document.createElement('label');
+                label.className = 'option-item';
+                label.onclick = () => selectOption(label, optText);
+
+                label.innerHTML = `
+                    <input type="radio" name="quizOpt">
+                    <span>${optText}</span>
+                `;
+                optionsContainer.appendChild(label);
+            });
+        }
+
+        let tempAnswer = "";
+        function selectOption(element, text) {
+            document.querySelectorAll('.option-item').forEach(item => item.classList.remove('selected'));
+            element.classList.add('selected');
+            
+            const radio = element.querySelector('input[type="radio"]');
+            radio.checked = true;
+            tempAnswer = text;
+
+            document.getElementById('btnNext').disabled = false;
+        }
+
+        function nextQuestion() {
+            selectedAnswers.push({
+                qNum: currentQuestionIndex + 1,
+                answer: tempAnswer
+            });
+
+            currentQuestionIndex++;
+
+            if(currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showConfessCard();
+            }
+        }
+
+        function showConfessCard() {
+            document.getElementById('quizCard').classList.add('hidden');
+            document.getElementById('confessCard').classList.remove('hidden');
+
+            const summaryBox = document.getElementById('answersSummary');
+            summaryBox.innerHTML = '';
+
+            selectedAnswers.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'summary-item';
+                div.innerHTML = `<strong>#${item.qNum}:</strong> ${item.answer}`;
+                summaryBox.appendChild(div);
+            });
+        }
+
+        // Tombol NO Kabur saat didekati
+        function moveNoButton() {
+            const btnNo = document.getElementById('btnNo');
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth / 2 - 60);
+            const y = Math.random() * (window.innerHeight - 120) - (window.innerHeight / 2 - 60);
+            btnNo.style.transform = `translate(${x}px, ${y}px)`;
+        }
+
+        function acceptLove() {
+            document.getElementById('confessCard').classList.add('hidden');
+            document.getElementById('successCard').classList.remove('hidden');
+        }
+
+        // Hujan Hati Latar Belakang
+        const heartContainer = document.getElementById('heartContainer');
+        const icons = ['♥️', '💖', '🌸', '✨'];
+        
+        for (let i = 0; i < 25; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('floating-heart');
+            heart.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartContainer.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
